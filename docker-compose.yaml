@@ -1,0 +1,26 @@
+version: "3.8"
+
+services:
+  frontend:
+    build:
+      context: ./frontend
+    container_name: frontend
+    ports:
+      - "3000:80" # Maps Nginx port 80 to localhost port 3000
+    networks:
+      - dendrogram-net
+
+  backend:
+    build:
+      context: ./backend
+    container_name: backend
+    ports:
+      - "8432:8432" # Maps backend port 8432 to localhost
+    networks:
+      - dendrogram-net
+    depends_on:
+      - frontend
+
+networks:
+  dendrogram-net:
+    driver: bridge
